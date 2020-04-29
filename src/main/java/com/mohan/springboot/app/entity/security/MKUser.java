@@ -7,14 +7,19 @@
 package com.mohan.springboot.app.entity.security;
 
 import com.mohan.springboot.app.audit.Auditable;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.util.Date;
-import javax.persistence.*;
-import java.io.Serializable;
 
 
 @Getter(AccessLevel.PUBLIC)
@@ -23,6 +28,7 @@ import java.io.Serializable;
 @Entity
 public class MKUser extends Auditable<String> implements Serializable {
 
+    private static final long serialVersionUID = -5293752851198112189L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")

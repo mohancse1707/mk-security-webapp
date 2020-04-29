@@ -6,19 +6,14 @@
 
 package com.mohan.springboot.app.audit;
 
-import com.mohan.springboot.app.entity.security.MKUserDetails;
-import org.springframework.data.domain.AuditorAware;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-
 import java.util.Optional;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuditorAwareImpl implements AuditorAware<String>
 {
     @Override
     public Optional<String> getCurrentAuditor() {
-        //SecurityContextHolder.getContext().getAuthentication().getName();
-        return Optional.of("MKGroup");
+        return Optional.of("MKGroup"+SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

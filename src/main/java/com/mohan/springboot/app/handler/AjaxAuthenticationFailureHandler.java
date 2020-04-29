@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2020. MK Groups.
  * All rights reserved.
@@ -6,13 +7,13 @@
 
 package com.mohan.springboot.app.handler;
 
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-
+import java.io.IOException;
 import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 public class AjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     public static final String UNAUTHORIZED_MESSAGE = "Authentication failed";
@@ -21,6 +22,6 @@ public class AjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
     }
 
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        response.sendError(401, "Authentication failed");
+        response.sendError(401, HttpStatus.UNAUTHORIZED.getReasonPhrase());
     }
 }
