@@ -21,7 +21,8 @@ module.exports = (options) => webpackMerge(commonConfig({env: ENV}), {
   output: {
     path: utils.root('target/classes/static/'),
     filename: 'app/[name].bundle.js',
-    chunkFilename: 'app/[id].chunk.js'
+    chunkFilename: 'app/[id].chunk.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -35,6 +36,7 @@ module.exports = (options) => webpackMerge(commonConfig({env: ENV}), {
     ]
   },
   devServer: {
+    stats: options.stats,
     hot: true,
     contentBase: './target/classes/static/',
     proxy: [{
@@ -50,12 +52,13 @@ module.exports = (options) => webpackMerge(commonConfig({env: ENV}), {
       ],
       target: `http${options.tls ? 's' : ''}://localhost:8080`,
       secure: false,
-      changeOrigin: false
+      changeOrigin: options.tls
     }],
     watchOptions: {
       ignored: /node_modules/
     },
-    https: options.tls
+    https: options.tls,
+    historyApiFallback: true
   },
   plugins: [
     new BrowserSyncPlugin({

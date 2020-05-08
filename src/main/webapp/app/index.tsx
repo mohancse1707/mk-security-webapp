@@ -1,26 +1,32 @@
+
 /*
  * Copyright (c) 2020. MK Groups.
  * All rights reserved.
  * All data of MK groups are confidential.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import './app.css';
 import App from './app';
-import { Provider } from 'react-redux';
-import initializeStore from './config/store';
+import initialize from './config/store';
+import { loadIcons } from './config/icon-loader';
 
+loadIcons();
 
-
+const store = initialize();
 const rootEl = document.getElementById('root');
 
-ReactDOM.render(
-  <Provider store={initializeStore}>
-    <App />
-  </Provider>
-  , rootEl);
+const render = Component =>
+  // eslint-disable-next-line react/no-render-return-value
+  ReactDOM.render(
+    <Provider store={store}>
+      <div>
+        <Component />
+      </div>
+    </Provider>,
+    rootEl
+  );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+render(App);

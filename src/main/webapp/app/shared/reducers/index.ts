@@ -5,9 +5,12 @@
  */
 
 import { combineReducers } from 'redux';
-import authentication from './authentication';
+import authentication, { AuthenticationState } from './authentication';
 
-const rootReducer = combineReducers({
+export interface IRootState {
+  readonly authentication: AuthenticationState;
+}
+const rootReducer = combineReducers<IRootState>({
   authentication
 });
 

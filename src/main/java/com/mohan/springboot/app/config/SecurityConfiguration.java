@@ -53,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
             .antMatchers("/content/**")
+            .antMatchers("/static/**")
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/db/**");
     }
@@ -65,12 +66,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .formLogin()
             .loginProcessingUrl("/app/authentication")
+            .loginPage("/")
             .successHandler(ajaxAuthenticationSuccessHandler())
             .failureHandler(ajaxAuthenticationFailureHandler())
             .permitAll()
             .and()
             .authorizeRequests()
             .antMatchers("/app/authenticate").permitAll()
+            .antMatchers("/api/**").permitAll()
+            .antMatchers("/api/account").permitAll()
             .antMatchers("/app/logout").permitAll()
             .antMatchers("/app/register").permitAll()
             .antMatchers("/app/rest/**").authenticated()

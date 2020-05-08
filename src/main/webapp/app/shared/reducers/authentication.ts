@@ -102,6 +102,11 @@ export const getSession = () => async (dispatch, getState) => {
 
 };
 
+export const getAllResourceList = () => ({
+  type: ACTION_TYPES.GET_SESSION,
+  payload: axios.get('api/account')
+});
+
 export const login = (username, password, rememberMe = false) => async (dispatch, getState) => {
   const data = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&remember-me=${rememberMe}&submit=Login`;
   await dispatch({

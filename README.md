@@ -89,9 +89,15 @@ https://react-redux.js.org/using-react-redux/connect-mapdispatch?_sm_au_=iVV0qDW
 npm install --save-dev @types/react-redux @types/react @types/react-dom @types/react-router-dom @types/redux @types/webpack-env
 
 
+You need to use an exact path for / otherwise it will also match /about.
 
+<Route exact path="/" component={Home} />
+https://stackoverflow.com/questions/43456656/react-router-v4-routes-not-working
 
 Server Side 
 
 Error Encoded password does not look like BCrypt
 Reason Load by user name not having the encoded password 
+
+
+*** ALWAYS IMPORT COMPONENT LIKE THIS import Home from {./path} not import {HOME} from './path''***

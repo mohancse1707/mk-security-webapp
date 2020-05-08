@@ -72,6 +72,10 @@ module.exports = options => ({
         SERVER_API_URL: `''`
       }
     }),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery'
+    }),
     new HtmlWebpackPlugin({
       template: './src/main/webapp/index.html',
       chunksSortMode: 'auto',

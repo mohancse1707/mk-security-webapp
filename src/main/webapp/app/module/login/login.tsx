@@ -4,43 +4,55 @@
  * All data of MK groups are confidential.
  */
 
-
-import React from 'react';
-import { bindActionCreators } from 'redux'
+import * as React from 'react';
 import { connect } from 'react-redux';
-import authentication, { login } from '../../shared/reducers/authentication';
-import { RouteComponentProps } from 'react-router-dom';
+import { login, getSession } from '../../shared/reducers/authentication';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
+import './login.css';
+import { IRootState } from 'app/shared/reducers';
 
-interface ILoginProps  extends StateProps, DispatchProps, RouteComponentProps<{}> {} {
-
+interface ILoginProps extends StateProps, DispatchProps, RouteComponentProps<{}> {
 }
 
 interface ILoginState {
   username: string;
   password: string;
   rememberMe: boolean;
-  isAuthenticated: boolean;
 }
 
 class Login extends React.Component<ILoginProps, ILoginState> {
-  constructor(props) {
-    super(props);
-    this.loginSubmit = this.loginSubmit.bind(this);
-  }
+
   state: ILoginState = {
-    username: 'admin',
-    password: 'admin',
-    rememberMe: false,
-    isAuthenticated: this.props.isAuthenticated
+    username: null as string,
+    password: null as string,
+    rememberMe: false
   };
 
-  loginSubmit =() => {
-    const { username, password, rememberMe} = this.state;
-    this.props.login(this.state.username, this.state.password, this.state.rememberMe);
+  componentDidUpdate(prevProps: ILoginProps) {
+    if (this.props.isAuthenticated !== prevProps.isAuthenticated) {
+
+    }
+  }
+
+  onChange = event => {
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    this.setState(state => ({ [event.target.name]: event.target.value }));
+  };
+
+  loginSubmit = () => {
+    const { username, password, rememberMe } = this.state;
+    return this.props.login(this.state.username, this.state.password, this.state.rememberMe);
+
   };
 
   render() {
-    const { username, password, rememberMe} = this.state;
+    const { location, isAuthenticated } = this.props;
+    const { from } = location.state || { from: { pathname: '/home', search: location.search } };
+    const { showModal } = this.state;
+    if (isAuthenticated) {
+      return <Redirect to={from} />;
+    }
+    const { username, password, rememberMe } = this.state;
     return (
       <div>
         <div className="login100-form validate-form">
@@ -52,15 +64,15 @@ class Login extends React.Component<ILoginProps, ILoginState> {
           </span>
 
                 <div className="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                  <input className="input100" type="text" value={username} name="username" placeholder="Username"></input>
-                  <span className="focus-input100-1"></span>
-                  <span className="focus-input100-2"></span>
+                  <input className="input100" type="text" value={username} onChange={this.onChange} name="username" placeholder="Username"/>
+                  <span className="focus-input100-1"/>
+                  <span className="focus-input100-2"/>
                 </div>
 
                 <div className="wrap-input100 rs1 validate-input" data-validate="Password is required">
-                  <input className="input100" type="password" value={password} name="password" placeholder="Password"></input>
-                  <span className="focus-input100-1"></span>
-                  <span className="focus-input100-2"></span>
+                  <input className="input100" type="password" value={password} onChange={this.onChange} name="password" placeholder="Password"/>
+                  <span className="focus-input100-1"/>
+                  <span className="focus-input100-2"/>
                 </div>
 
                 <div className="container-login100-form-btn m-t-20">
@@ -70,9 +82,9 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                 </div>
 
                 <div className="text-center p-t-45 p-b-4">
-            <span className="txt1">
-              Forgot
-            </span>
+                <span className="txt1">
+                  Forgot
+                </span>
 
                   <a href="#" className="txt2 hov1">
                     Username / Password?
@@ -80,9 +92,9 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                 </div>
 
                 <div className="text-center">
-            <span className="txt1">
-              Create an account?
-            </span>
+                <span className="txt1">
+                  Create an account?
+                </span>
 
                   <a href="#" className="txt2 hov1">
                     Sign up
@@ -98,14 +110,15 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   }
 }
 
-const mapStateToProps = storeState => ({
-  isAuthenticated: storeState.authentication.isAuthenticated,
-  loginError: storeState.authentication.loginError
+const mapStateToProps = ({ authentication }: IRootState) => ({
+  isAuthenticated: authentication.isAuthenticated,
+  loginError: authentication.loginError,
+  showModal: authentication.showModalLogin
 });
 
 const mapDispatchToProps = { login };
 
-//const mapDispatchToProps = dispatch => ({ login, dispatch });
+// const mapDispatchToProps = dispatch => ({ login, dispatch });
 
 // const mapDispatchToProps = dispatch => ({
 //   login: () => {
@@ -132,4 +145,4 @@ const mapDispatchToProps = { login };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps) (Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,12 +1,19 @@
 import React from 'react';
 import './app.css';
-import Login from 'app/module/login/login';
-export class App extends React.Component<any, any> {
+import { HashRouter as Router } from 'react-router-dom';
+import AppRoutes from 'app/routes';
 
-  componentDidMount() {}
+const baseHref = document
+  .querySelector('base')
+  .getAttribute('href')
+  .replace(/\/$/, '');
+
+export class App extends React.Component<any, any> {
   render() {
     return (
-      <Login/>
+      <Router basename={baseHref}>
+        <AppRoutes />
+      </Router>
     );
   }
 }
