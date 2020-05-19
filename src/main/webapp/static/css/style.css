@@ -3,13 +3,9 @@
  * All rights reserved.
  * All data of MK groups are confidential.
  */
-html,
-body {
-  overflow-x: hidden; /* Prevent scroll on narrow devices */
-}
 
 body {
-  padding-top: 56px !important;
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
 
 @media (max-width: 767.98px) {
@@ -99,6 +95,10 @@ body {
   margin-top: 100px !important;
 }
 
+.mt-175 {
+  margin-top: 175px !important;
+}
+
 .mt-70 {
   margin-top: 70px !important;
 }
@@ -108,4 +108,43 @@ body {
 
 .border-2x-solid {
   border: 2px solid #e4e4e4;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 2px solid #dee2e6;
+}
+.table thead {
+  font-size: 11px;
+  line-height: 2em;
+  background-position: top left;
+  color: #fff;
+  padding: 1px 1px 1px 7px;
+  text-align: left;
+  background-repeat-x: repeat;
+  background-repeat-y: no-repeat;
+  background-size: contain;
+}
+.table thead th {
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+}
+.table tbody td {
+  background: #ffffff;
+  padding: 0.5rem 0.25rem;
+  vertical-align: middle;
+}
+
+.table-responsive {
+  display: inline;
+}
+.table tbody {
+  background: #f2f2f2;
+  text-align: center;
+
+  font-size: 10px;
+}
+
+.table-summary {
+  width: 50% !important;
 }

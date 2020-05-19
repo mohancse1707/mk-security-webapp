@@ -26,8 +26,6 @@ import {
   faFlag,
   faBell,
   faHome,
-  faTimesCircle,
-  faSearch,
   faCircle
 } from '@fortawesome/fontawesome-free-solid';
 import fontawesome from '@fortawesome/fontawesome';

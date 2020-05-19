@@ -9,9 +9,11 @@ package com.mohan.springboot.app.config;
 import com.mohan.springboot.app.handler.AjaxAuthenticationFailureHandler;
 import com.mohan.springboot.app.handler.AjaxAuthenticationSuccessHandler;
 import com.mohan.springboot.app.handler.AjaxLogoutSuccessHandler;
+import com.mohan.springboot.app.handler.Http401UnauthorizedEntryPoint;
 import com.mohan.springboot.app.security.CustomDaoAuthenticationProvider;
 import com.mohan.springboot.app.security.CustomUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -47,6 +49,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new AjaxLogoutSuccessHandler();
     }
 
+    @Bean
+    public Http401UnauthorizedEntryPoint authenticationEntryPoint() {
+        return new Http401UnauthorizedEntryPoint();
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -61,11 +67,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .httpBasic()
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint()) // which returns 401 instead of 302 on failure URL match
             .and()
             .csrf().disable()
             .formLogin()
             .loginProcessingUrl("/app/authentication")
+            .usernameParameter("username")
+            .passwordParameter("password")
             .loginPage("/")
             .successHandler(ajaxAuthenticationSuccessHandler())
             .failureHandler(ajaxAuthenticationFailureHandler())
@@ -73,8 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/app/authenticate").permitAll()
-            .antMatchers("/api/**").permitAll()
-            .antMatchers("/api/account").permitAll()
+            .antMatchers("/api/**").authenticated()
             .antMatchers("/app/logout").permitAll()
             .antMatchers("/app/register").permitAll()
             .antMatchers("/app/rest/**").authenticated()
@@ -92,8 +100,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder authManager) throws Exception {
         authManager
             .authenticationProvider(customDaoAuthenticationProvider());
-
-
     }
 
     /*
@@ -120,6 +126,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

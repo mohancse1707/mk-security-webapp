@@ -83,7 +83,7 @@ module.exports = options => ({
       baseUrl: options.env === 'development'?'/':'/security/'
     }),
     new CopyWebpackPlugin([
-      { from: './src/main/webapp/static/', to: 'content' }
+      { from: './src/main/webapp/static/', to: 'static' }
     ])
   ]
 });

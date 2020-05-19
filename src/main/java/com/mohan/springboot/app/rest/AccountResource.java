@@ -8,6 +8,8 @@ package com.mohan.springboot.app.rest;
 
 
 import com.mohan.springboot.app.dto.user.UserDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * REST controller for managing the current user's account.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class AccountResource {
@@ -34,9 +37,11 @@ public class AccountResource {
      */
     @GetMapping("/account")
     public UserDTO getAccount() {
+        Boolean isAuthenticated = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+        log.info("IS AUTH {}", isAuthenticated);
         UserDTO  userDTO = new UserDTO();
         userDTO.setFirstName("Admin");
-        userDTO.setActivated(true);
+        userDTO.setActivated(isAuthenticated);
         userDTO.setLogin("admin");
         return userDTO;
     }

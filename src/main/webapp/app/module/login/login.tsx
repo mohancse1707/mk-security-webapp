@@ -23,8 +23,8 @@ interface ILoginState {
 class Login extends React.Component<ILoginProps, ILoginState> {
 
   state: ILoginState = {
-    username: null as string,
-    password: null as string,
+    username: '',
+    password: '',
     rememberMe: false
   };
 
@@ -36,13 +36,16 @@ class Login extends React.Component<ILoginProps, ILoginState> {
 
   onChange = event => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-    this.setState(state => ({ [event.target.name]: event.target.value }));
+    const newState = { [event.target.name]: value } as Pick<ILoginState, keyof ILoginState>;
+    this.setState(newState);
+    // let change = {} as Pick<ILoginState, keyof ILoginState>;
+    // change[event.target.name] = event.target.value;
+    // this.setState(change);
   };
 
   loginSubmit = () => {
     const { username, password, rememberMe } = this.state;
     return this.props.login(this.state.username, this.state.password, this.state.rememberMe);
-
   };
 
   render() {
@@ -64,13 +67,13 @@ class Login extends React.Component<ILoginProps, ILoginState> {
           </span>
 
                 <div className="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                  <input className="input100" type="text" value={username} onChange={this.onChange} name="username" placeholder="Username"/>
+                  <input className="input100" type="text" name="username" value={username} onChange={this.onChange} placeholder="Username"/>
                   <span className="focus-input100-1"/>
                   <span className="focus-input100-2"/>
                 </div>
 
                 <div className="wrap-input100 rs1 validate-input" data-validate="Password is required">
-                  <input className="input100" type="password" value={password} onChange={this.onChange} name="password" placeholder="Password"/>
+                  <input className="input100" type="password" name="password" value={password} onChange={this.onChange} placeholder="Password"/>
                   <span className="focus-input100-1"/>
                   <span className="focus-input100-2"/>
                 </div>
@@ -112,8 +115,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
 
 const mapStateToProps = ({ authentication }: IRootState) => ({
   isAuthenticated: authentication.isAuthenticated,
-  loginError: authentication.loginError,
-  showModal: authentication.showModalLogin
+  loginError: authentication.loginError
 });
 
 const mapDispatchToProps = { login };
