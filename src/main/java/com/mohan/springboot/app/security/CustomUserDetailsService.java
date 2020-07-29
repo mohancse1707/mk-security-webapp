@@ -6,19 +6,27 @@
 
 package com.mohan.springboot.app.security;
 
+import com.mohan.springboot.app.entity.security.SpringUser;
+import com.mohan.springboot.app.entity.security.MKUser;
+import com.mohan.springboot.app.repository.user.UserRepository;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        log.info("UserName {} password {}", s, s);
-        User user = new User("admin", "$2a$10$Lxzj1o66u39RkPCGaoyksuxF9.vTUqh/OthLgkqLz6s5rvHa.nkRO", AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("UserName {} password {}", username, username);
+        Optional<MKUser> optionalUser = userRepository.findByUsername(username);
+        UserDetails user = optionalUser.map(SpringUser::new).get();
         log.info("user {} ", user);
         return user;
     }

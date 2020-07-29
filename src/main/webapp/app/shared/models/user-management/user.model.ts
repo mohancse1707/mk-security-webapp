@@ -6,13 +6,18 @@
 
 export interface IUser {
   id?: any;
-  login?: string;
+  username?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
+  mobileNumber?: string;
   activated?: boolean;
-  langKey?: string;
-  authorities?: any[];
+  accountLockedDate?: Date;
+  accountValidTill?: Date;
+  invalidAttempts?: number;
+  passwordChanged?: boolean;
+  passwordValidTill?: Date;
+  authorities?: [];
   createdBy?: string;
   createdDate?: Date;
   lastModifiedBy?: string;
@@ -22,12 +27,16 @@ export interface IUser {
 
 export const defaultValue: Readonly<IUser> = {
   id: '',
-  login: '',
+  username: '',
   firstName: '',
   lastName: '',
   email: '',
   activated: true,
-  langKey: '',
+  accountLockedDate: null,
+  accountValidTill: null,
+  invalidAttempts: 0,
+  passwordChanged: false,
+  passwordValidTill: null,
   authorities: [],
   createdBy: '',
   createdDate: null,

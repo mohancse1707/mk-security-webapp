@@ -42,7 +42,6 @@ public class AccountResource {
         UserDTO  userDTO = new UserDTO();
         userDTO.setFirstName("Admin");
         userDTO.setActivated(isAuthenticated);
-        userDTO.setLogin("admin");
         return userDTO;
     }
 }

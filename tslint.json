@@ -122,6 +122,7 @@
     "label-position": true,
     "max-line-length": [true, 180],
     "member-access": false,
+    "no-object-literal-type-assertion": [false, {"allow-arguments": false}],
     "member-ordering": [true, {
       "order": [
         {

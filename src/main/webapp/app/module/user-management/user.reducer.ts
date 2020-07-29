@@ -6,7 +6,7 @@
 
 import axios from 'axios';
 import { REQUEST, SUCCESS, FAILURE } from '../../shared/reducers/action-type.util';
-import { IUser, defaultValue } from '../../shared/models/user.model';
+import { IUser } from '../../shared/models/user-management/user.model';
 
 export const ACTION_TYPES = {
   FETCH_ROLES: 'userManagement/FETCH_ROLES',
@@ -17,13 +17,13 @@ export const ACTION_TYPES = {
 const initialState = {
   loading: false,
   errorMessage: null,
-  users: [] as ReadonlyArray<IUser>,
+  users: [] as IUser[],
   updating: false,
   updateSuccess: false,
   totalItems: 0
 };
 
-const apiUrl = 'api/users';
+const apiUrl = 'app/rest/user';
 
 export type UserState = Readonly<typeof initialState>;
 
@@ -58,6 +58,6 @@ export default (state: UserState = initialState, action): UserState => {
 };
 
 export const getUsers = () => ({
-  type: ACTION_TYPES.FETCH_ROLES,
-  payload: axios.get(`${apiUrl}/authorities`)
+  type: ACTION_TYPES.FETCH_USERS,
+  payload: axios.get(`${apiUrl}/getUsers`)
 });

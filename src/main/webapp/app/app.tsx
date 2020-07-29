@@ -6,6 +6,7 @@ import AppRoutes from 'app/routes';
 import { getSession } from 'app/shared/reducers/authentication';
 import Header from 'app/shared/layout/header';
 import { IRootState } from 'app/shared/reducers';
+import Footer from "app/shared/layout/footer";
 
 const baseHref = document
   .querySelector('base')
@@ -25,12 +26,14 @@ export const App = (props: IAppProps) => {
         <main className="container">
           <AppRoutes />
         </main>
+        <Footer/>
       </Router>
     );
   };
 
 const mapStateToProps = ({ authentication }: IRootState) => ({
-  isAuthenticated: authentication.isAuthenticated
+  isAuthenticated: authentication.isAuthenticated,
+  account: authentication.account
 });
 
 const mapDispatchToProps = { getSession };

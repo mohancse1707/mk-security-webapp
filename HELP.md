@@ -25,3 +25,29 @@ The following guides illustrate how to use some features concretely:
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 
+```html
+<div className="form-group row">
+                    <div className="col-sm-6">
+                      <label htmlFor="inputCity">City</label>
+                      <input type="text" className="form-control" id="inputCity" placeholder="City"></input>
+                    </div>
+                    <div className="col-sm-3">
+                      <label htmlFor="inputState">State</label>
+                      <input type="text" className="form-control" id="inputState" placeholder="State"></input>
+                    </div>
+                    <div className="col-sm-3">
+                      <label htmlFor="inputPostalCode">Postal Code</label>
+                      <input type="text" className="form-control" id="inputPostalCode" placeholder="Postal Code"></input>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-sm-6">
+                      <label htmlFor="inputContactNumber">Contact Number</label>
+                      <input type="number" className="form-control" id="inputContactNumber" placeholder="Contact Number"></input>
+                    </div>
+                    <div className="col-sm-6">
+                      <label htmlFor="inputWebsite">Website</label>
+                      <input type="text" className="form-control" id="inputWebsite" placeholder="Website"></input>
+                    </div>
+                  </div>
+```

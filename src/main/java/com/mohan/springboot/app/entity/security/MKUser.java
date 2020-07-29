@@ -9,11 +9,16 @@ package com.mohan.springboot.app.entity.security;
 import com.mohan.springboot.app.audit.Auditable;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,6 +54,9 @@ public class MKUser extends Auditable<String> implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "password_valid_till")
     private Date passwordValidTill;
@@ -66,4 +74,11 @@ public class MKUser extends Auditable<String> implements Serializable {
 
     @Column(name = "is_password_changed")
     private boolean isPasswordChanged;
+
+    @ManyToMany(cascade= CascadeType.ALL)
+    @JoinTable(
+        name="mkuser_role_map",
+        joinColumns={@JoinColumn(name="user_id", referencedColumnName="user_id")},
+        inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="role_id")})
+    private List<MKRoles> roles;
 }

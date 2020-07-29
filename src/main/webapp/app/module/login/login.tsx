@@ -38,6 +38,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     const newState = { [event.target.name]: value } as Pick<ILoginState, keyof ILoginState>;
     this.setState(newState);
+
     // let change = {} as Pick<ILoginState, keyof ILoginState>;
     // change[event.target.name] = event.target.value;
     // this.setState(change);

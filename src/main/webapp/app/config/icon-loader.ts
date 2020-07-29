@@ -26,7 +26,8 @@ import {
   faFlag,
   faBell,
   faHome,
-  faCircle
+  faCircle,
+  faEdit
 } from '@fortawesome/fontawesome-free-solid';
 import fontawesome from '@fortawesome/fontawesome';
 
@@ -58,6 +59,7 @@ export const loadIcons = () => {
     faFlag,
     faBell,
     faHome,
-    faCircle
+    faCircle,
+    faEdit
   );
 };

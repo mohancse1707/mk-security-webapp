@@ -43,7 +43,9 @@ const Header = (props: IHeaderProps) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Profile</a>
+                  <Link to="/dynamic">
+                    <span className="nav-link active">Dynamic Table</span>
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">Switch account</a>

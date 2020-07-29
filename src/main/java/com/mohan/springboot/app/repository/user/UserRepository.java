@@ -7,10 +7,12 @@
 package com.mohan.springboot.app.repository.user;
 
 import com.mohan.springboot.app.entity.security.MKUser;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MKUserRepository extends JpaRepository<MKUser, Long> {
+public interface UserRepository extends JpaRepository<MKUser, Long> {
 
+    Optional<MKUser> findByUsername(String username);
 }

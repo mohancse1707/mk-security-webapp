@@ -13,7 +13,6 @@ import com.mohan.springboot.app.handler.Http401UnauthorizedEntryPoint;
 import com.mohan.springboot.app.security.CustomDaoAuthenticationProvider;
 import com.mohan.springboot.app.security.CustomUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -130,7 +129,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder(){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        log.info("encoder {}", encoder.encode("admin"));
         return encoder;
     }
 }
